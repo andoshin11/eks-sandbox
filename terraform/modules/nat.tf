@@ -6,18 +6,18 @@ resource "aws_nat_gateway" "nat_1a" {
   tags = merge(local.default_tags, map("Name", "${local.base_name}-1a"))
 }
 
-resource "aws_nat_gateway" "nat_1b" {
-  subnet_id     = aws_subnet.subnet-public-b.id
-  allocation_id = aws_eip.nat_1b.id
-
-
-  tags = merge(local.default_tags, map("Name", "${local.base_name}-1b"))
-}
-
 resource "aws_nat_gateway" "nat_1c" {
   subnet_id     = aws_subnet.subnet-public-c.id
   allocation_id = aws_eip.nat_1c.id
 
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-1c"))
+}
+
+resource "aws_nat_gateway" "nat_1d" {
+  subnet_id     = aws_subnet.subnet-public-d.id
+  allocation_id = aws_eip.nat_1d.id
+
+
+  tags = merge(local.default_tags, map("Name", "${local.base_name}-1d"))
 }
