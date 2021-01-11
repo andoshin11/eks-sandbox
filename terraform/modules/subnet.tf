@@ -7,6 +7,12 @@ resource "aws_subnet" "subnet-public-a" {
   map_public_ip_on_launch = true
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-subnet-public-a"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_subnet" "subnet-public-c" {
@@ -16,6 +22,12 @@ resource "aws_subnet" "subnet-public-c" {
   map_public_ip_on_launch = true
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-subnet-public-c"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_subnet" "subnet-public-d" {
@@ -25,6 +37,12 @@ resource "aws_subnet" "subnet-public-d" {
   map_public_ip_on_launch = true
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-subnet-public-d"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 # Private Subnet
@@ -36,6 +54,12 @@ resource "aws_subnet" "subnet-private-a" {
   map_public_ip_on_launch = true
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-subnet-private-a"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_subnet" "subnet-private-c" {
@@ -45,6 +69,12 @@ resource "aws_subnet" "subnet-private-c" {
   map_public_ip_on_launch = true
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-subnet-private-c"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_subnet" "subnet-private-d" {
@@ -54,4 +84,10 @@ resource "aws_subnet" "subnet-private-d" {
   map_public_ip_on_launch = true
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-subnet-private-d"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }

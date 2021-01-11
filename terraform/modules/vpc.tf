@@ -7,4 +7,10 @@ resource "aws_vpc" "vpc" {
   instance_tenancy     = "default"
 
   tags = merge(local.default_tags, map("Name", "${local.base_name}-vpc"))
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
