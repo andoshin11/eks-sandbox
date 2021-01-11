@@ -1,64 +1,61 @@
+resource "aws_security_group" "eks-master" {
+  name        = "${var.name}-${terraform.workspace}-security-group-eks-master"
+  description = "EKS master security group"
+  vpc_id = aws_vpc.vpc.id
 
-# resource "aws_security_group" "cluster-master" {
-#   name = "${var.name}-${terraform.workspace}-security-group-cluster-master"
-#   description = "EKS cluster master security group"
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#   tags = merge(local.default_tags,map("Name","${var.name}-${terraform.workspace}-security-group-cluster-master"))
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#   vpc_id = aws_vpc.vpc.id
+  tags = merge(local.default_tags,map("Name","${var.name}-${terraform.workspace}-security-group-eks-master"))
+}
 
-#   ingress {
-#     from_port   = 443
-#     to_port     = 443
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+resource "aws_security_group" "eks-node" {
+  name        = "${var.name}-${terraform.workspace}-security-group-eks-node"
+  description = "EKS node security group"
+  vpc_id = aws_vpc.vpc.id
 
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }
+  ingress {
+    description     = "Allow cluster master to access cluster node"
+    from_port       = 1025
+    to_port         = 65535
+    protocol        = "tcp"
+    security_groups = [aws_security_group.eks-master.id]
+  }
 
-# resource "aws_security_group" "cluster-nodes" {
-#   name        = "${var.name}-${terraform.workspace}-security-group-cluster-nodes"
-#   description = "EKS cluster nodes security group"
+  ingress {
+    description     = "Allow cluster master to access cluster node"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.eks-master.id]
+    self            = false
+  }
 
-#   tags   = merge(local.default_tags,map("Name","${var.name}-${terraform.workspace}-security-group-cluster-nodes"))
-#   vpc_id = aws_vpc.vpc.id
+  ingress {
+    description = "Allow inter pods communication"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    self        = true
+  }
 
-#   ingress {
-#     description = "Allow cluster master to access cluster nodes"
-#     from_port   = 1025
-#     to_port     = 65535
-#     protocol    = "tcp"
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#     security_groups = [aws_security_group.cluster-master.id]
-#   }
-
-#   ingress {
-#     description = "Allow cluster master to access cluster nodes"
-#     from_port   = 1025
-#     to_port     = 65535
-#     protocol    = "udp"
-
-#     security_groups = [aws_security_group.cluster-master.id]
-#   }
-
-#   ingress {
-#     description = "Allow inter pods communication"
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     self        = true
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }
+  tags = merge(local.default_tags,map("Name","${var.name}-${terraform.workspace}-security-group-eks-node"))
+}

@@ -1,21 +1,3 @@
-
-# # resource "aws_route_table" "rtb" {
-# #   vpc_id = aws_vpc.vpc.id
-
-# #   route {
-# #     cidr_block = "0.0.0.0/0"
-# #     gateway_id = aws_internet_gateway.igw.id
-# #   }
-
-# #   tags = merge(local.default_tags, map("Name", "${local.base_name}-rtb"))
-# # }
-
-# # resource "aws_route_table_association" "rtba" {
-# #   count          = var.num_subnets
-# #   subnet_id      = element(aws_subnet.subnet.*.id, count.index)
-# #   route_table_id = aws_route_table.rtb.id
-# # }
-
 ####################
 ### Route Table ####
 ####################
