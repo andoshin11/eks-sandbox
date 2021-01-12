@@ -69,6 +69,11 @@ resource "aws_iam_role_policy_attachment" "ecr-ro" {
   role       = aws_iam_role.eks-node.name
 }
 
+resource "aws_iam_role_policy_attachment" "ec2-role-for-ssm" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+  role       = aws_iam_role.eks-node.name
+}
+
 resource "aws_iam_instance_profile" "eks-node" {
   name = "eks-node-profile"
   role = aws_iam_role.eks-node.name
