@@ -23,6 +23,6 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          push: false
+          push: true
           context: microservices/echo
           tags: andoshin11/echo-service:${{ github.sha }}
