@@ -1,7 +1,9 @@
 name: Push Docker Image
 
 on:
-  push
+  push:
+    branches:
+      - master
 
 jobs:
   build-and-push:
