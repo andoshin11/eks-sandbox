@@ -34,7 +34,7 @@ resource "aws_launch_configuration" "lc" {
   image_id                    = data.aws_ami.eks-node.image_id
   instance_type               = var.instance_type
   name_prefix                 = "eks-node"
-  key_name                    = var.key_name
+  # key_name                    = var.key_name
 
   root_block_device {
     volume_type = "gp2"
