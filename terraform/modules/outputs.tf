@@ -1,7 +1,7 @@
-output "kubectl config" {
+output "kubectl_config" {
   value = local.kubeconfig
 }
 
-output "EKS ConfigMap" {
+output "eks_configmap" {
   value = local.eks_configmap
 }

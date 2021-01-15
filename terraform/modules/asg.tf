@@ -10,13 +10,7 @@ resource "aws_autoscaling_group" "eks-asg" {
     aws_subnet.subnet-private-d.id,
   ]
 
-  tags = merge(local.default_tags, map("Name", "${local.base_name}-eks-asg"))
-
-  tag {
-    key                 = "kubernetes.io/cluster/${local.cluster_name}"
-    value               = "owned"
-    propagate_at_launch = true
-  }
+  # tags = merge(local.default_tags, map("Name", "${local.base_name}-eks-asg"))
 
   lifecycle {
     create_before_destroy = true
